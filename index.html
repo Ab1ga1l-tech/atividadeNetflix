@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix</title>
+    <title>Busca de Filmes</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <H1>Busca de Filmes</H1>
-    <label for="buscarFilme"></label>
-    <input type="text" name="buscarFilme" id="buscarFilme" placeholder="Digite o nome do filme">
 
-    <button id="BntFilme">Buscar </button>
-    <div class="dados-filme"></div>
+    <h1>Busca de Filmes</h1>
+    <input type="text" id="buscarFilme" placeholder="Digite o nome do filme">
+    <button id="BntFilme">Buscar</button>
 
+    <div id="dadosFilme"></div>
+
+    <script type="module" src="./assets/js/script.js"></script>
 </body>
 </html>
