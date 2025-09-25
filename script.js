@@ -1,42 +1,49 @@
-
-import {chaveApi} from "./dadosApi.js";
+import { chaveApi } from "./dadosApi.js";
 
 const buscarFilme = document.querySelector('#buscarFilme');
-const bntBuscar = document.querySelector('BntFilme');
+const bntBuscar = document.querySelector('#BntFilme');
+const dadosFilme = document.querySelector('.dados-filme');
 
-async function buscarCep(){
-    dadosEndereco.innerHTML = `<p>Buscar dados...</p>`;
+async function buscarFilmesPorTitulo(titulo) {
+  dadosFilme.innerHTML = `<p>Buscando...</p>`;
 
-const url = `https://www.omdbapi.com/?i=tt3896198&apikey=${chaveApi}`
-    try{
-        const response = await fetch(url);
-        const data = await response.json();
-        if(data.erro){
-            throw new Error ('Cep não encontrado!');
-        }
-        mostrarEndereco(data);
+  const url = `https://www.omdbapi.com/?s=${encodeURIComponent(titulo)}&apikey=${chaveApi}`;
 
-    }catch{
-        dadosEndereco.innerHTML= `<p> ${console.error(error)}</p>`
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.Response === "False") {
+      throw new Error(data.Error);
     }
+
+    mostrarFilmes(data.Search);
+
+  } catch (error) {
+    dadosFilme.innerHTML = `<p>${error.message}</p>`;
+  }
 }
 
-function mostrarEndereco(enderecoCep){
-    dadosEndereco.innerHTML='';
+function mostrarFilmes(listaFilmes) {
+  dadosFilme.innerHTML = ''; // limpa o container
 
-    const enderecoHTML = `
-    <ul>
-        <li><strong>Cep: </strong>${enderecoCep.cep}</li>
-        <li><strong>Bairro: </strong>${enderecoCep.bairro}</li>
-        <li><strong>Logadouro: </strong>${enderecoCep.logadouro}</li>
-        <li><strong>Cidade: </strong>${enderecoCep.uf}</li>
-    </ul>
-    `
-    dadosEndereco.innerHTML = enderecoHTML;
+  listaFilmes.forEach(filme => {
+    const filmeHTML = `
+      <div class="filme">
+        <img src="${filme.Poster !== 'N/A' ? filme.Poster : 'https://via.placeholder.com/150'}" alt="Poster do filme ${filme.Title}">
+        <h2>${filme.Title} (${filme.Year})</h2>
+        <p>Tipo: ${filme.Type}</p>
+      </div>
+    `;
+    dadosFilme.insertAdjacentHTML('beforeend', filmeHTML);
+  });
 }
 
-
-bntBuscar.addEventListener('click',()=>{
-    const cep = campoCep.value.trim();
-    buscarCep(cep)
-})
+bntBuscar.addEventListener('click', () => {
+  const titulo = buscarFilme.value.trim();
+  if (titulo) {
+    buscarFilmesPorTitulo(titulo);
+  } else {
+    dadosFilme.innerHTML = `<p>Por favor, digite um título para buscar.</p>`;
+  }
+});
