@@ -1,3 +1,2 @@
-const chaveApi = 'b304a8a';
-
-export {chaveApi};
+const chaveApi = "b304a8a"; // sua chave da OMDB
+export { chaveApi };
