@@ -4,7 +4,7 @@ const buscarFilme = document.querySelector('#buscarFilme');
 const bntBuscar = document.querySelector('#BntFilme');
 const dadosFilme = document.querySelector('#dadosFilme');
 
-// Função para buscar lista de filmes
+// Função principal: busca lista de filmes
 async function buscarFilmesPorTitulo(titulo) {
   dadosFilme.innerHTML = `<p>Buscando...</p>`;
 
@@ -27,7 +27,7 @@ async function buscarFilmesPorTitulo(titulo) {
 
 // Função para mostrar vários filmes
 function mostrarListaDeFilmes(listaFilmes) {
-  dadosFilme.innerHTML = ''; // limpa a área antes de mostrar os resultados
+  dadosFilme.innerHTML = ''; // limpa antes de mostrar os resultados
 
   listaFilmes.forEach(filme => {
     const filmeHTML = `
